@@ -1,5 +1,5 @@
 # Maintainer: ***REMOVED*** <***REMOVED***>
-pkgname=vulkan-low-latency-layer-git
+pkgname=vulkan-low-latency-layer-bin
 _pkgname=low_latency_layer
 pkgver=r17.g7797cae
 pkgrel=1

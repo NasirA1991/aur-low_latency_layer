@@ -1,4 +1,4 @@
-pkgbase = vulkan-low-latency-layer-git
+pkgbase = vulkan-low-latency-layer-bin
 	pkgdesc = Vulkan layer for hardware agnostic input latency reduction (Reflex & Anti-Lag 2 on any GPU)
 	pkgver = r17.g7797cae
 	pkgrel = 1
@@ -18,4 +18,4 @@ pkgbase = vulkan-low-latency-layer-git
 	source = git+https://github.com/Korthos-Software/low_latency_layer.git
 	sha256sums = SKIP
 
-pkgname = vulkan-low-latency-layer-git
+pkgname = vulkan-low-latency-layer-bin
