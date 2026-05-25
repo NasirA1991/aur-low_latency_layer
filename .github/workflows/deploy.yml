@@ -1,0 +1,31 @@
+name: Deploy to AUR
+
+on:
+  schedule:
+    - cron: '0 */2 * * *' # Every 2 hours
+  workflow_dispatch: # Allows manual run button
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch Latest Upstream Version Tag
+        run: |
+          # Fetch the real version tag from the dev repo
+          LATEST_VER=$(git ls-remote --tags https://github.com/Korthos-Software/low_latency_layer.git | awk -F/ '{print $3}' | grep -v '\^{}' | sed 's/^v//' | sort -V | tail -n1)
+          echo "Latest found version is: $LATEST_VER"
+          # Forcefully overwrite the pkgver= line inside the PKGBUILD file
+          sed -i "s/^pkgver=.*/pkgver=$LATEST_VER/" PKGBUILD
+
+      - name: Publish to AUR
+        uses: KSXGitHub/github-actions-deploy-aur@v3
+        with:
+          pkgname: vulkan-low-latency-layer-bin
+          PKGBUILD: ./PKGBUILD
+          SSH_PRIVATE_KEY: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
+          commit_username: ${{ secrets.AUR_COMMIT_USERNAME }}
+          commit_email: ${{ secrets.AUR_COMMIT_EMAIL }}
+          updpkgsums: true
